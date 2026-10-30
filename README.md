@@ -120,3 +120,8 @@ AI assistance will be disclosed. AI-generated suggestions are treated as proposa
 Technical claims, references, code, and experimental results must be independently checked.
 
 11. Current Status
+Stage: Initial research design.
+
+First milestone: Build a reproducible benchmark for evidence-aware reasoning revision.
+
+No experimental results or claims of scientific novelty are made at this stage.
