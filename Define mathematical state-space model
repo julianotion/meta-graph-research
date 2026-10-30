@@ -1,0 +1,227 @@
+Dynamic Stability Metrics
+
+1. Purpose
+
+This document defines an initial mathematical framework for evaluating the dynamic behavior of Meta-Graph.
+
+The system is investigated as a discrete dynamical system subject to external perturbations and internal feedback.
+
+The primary objectives are to measure:
+
+* Reasoning stability.
+* Error propagation.
+* Recovery dynamics.
+* Revision oscillations.
+* Convergence.
+* Sensitivity to evidence changes.
+
+2. State Representation
+
+Let the system state at discrete time k be:
+
+X_k = [C_k, E_k, A_k, D_k, U_k, R_k]
+
+The system evolves according to:
+
+X_(k+1) = F(X_k, P_k, Θ)
+
+Where:
+
+* X_k — current system state.
+* P_k — external perturbation.
+* F — state transition function.
+* Θ — system parameters.
+
+3. State Distance
+
+Define a state distance function:
+
+d(X_i, X_j)
+
+This function measures the difference between two reasoning states.
+
+It may combine:
+
+* Changes in claim status.
+* Changes in dependency relationships.
+* Changes in evidence support.
+* Changes in uncertainty.
+* Changes in revision history.
+
+The distance function must be explicitly defined for each implementation.
+
+4. Perturbation Sensitivity
+
+Measure how strongly the system responds to an external perturbation.
+
+S = d(X_after, X_before) / magnitude(P)
+
+Where:
+
+* S — perturbation sensitivity.
+* X_before — state before perturbation.
+* X_after — state after perturbation.
+* magnitude(P) — defined perturbation magnitude.
+
+For symbolic perturbations, magnitude must be operationally defined.
+
+High sensitivity is not automatically undesirable.
+
+The objective is appropriate sensitivity:
+
+* Low response to irrelevant perturbations.
+* Appropriate response to relevant evidence.
+
+5. Recovery Time
+
+Define recovery time as the number of state transitions required to reach an acceptable justified state after a perturbation.
+
+T_recovery = k_recovered - k_perturbation
+
+Recovery criteria must be defined before evaluation.
+
+A justified uncertainty state may qualify as successful recovery.
+
+6. Revision Oscillation
+
+An oscillation occurs when the system repeatedly changes between incompatible conclusions without obtaining meaningful new evidence.
+
+Define:
+
+O = N_reversals / N_revision_transitions
+
+Where:
+
+* O — revision oscillation rate.
+* N_reversals — number of reversals between previously visited incompatible states.
+* N_revision_transitions — total revision transitions.
+
+The exact detection procedure must be specified during implementation.
+
+7. Error Propagation
+
+Let G = (V, E) represent the reasoning dependency graph.
+
+For an invalid node v, define:
+
+Reach(v) = {u ∈ V : a directed dependency path exists from v to u}
+
+The propagation scope is:
+
+P_scope(v) = |Reach(v)| / |V|
+
+This measures the proportion of graph nodes potentially affected by a failure.
+
+Potential impact must be distinguished from confirmed error propagation.
+
+8. Dependency Recovery
+
+Measure the system’s ability to identify all relevant downstream dependencies after a node becomes invalid.
+
+Recovery Precision:
+
+Correctly Identified Affected Nodes / All Identified Affected Nodes
+
+Recovery Recall:
+
+Correctly Identified Affected Nodes / All Actually Affected Nodes
+
+9. Stability Under Irrelevant Perturbations
+
+Apply perturbations that should not change the correct conclusion.
+
+Measure:
+
+R_irrelevant = Unjustified Conclusion Changes / Total Irrelevant Perturbations
+
+Lower values indicate better robustness.
+
+10. Correctability Under Relevant Perturbations
+
+Apply perturbations that invalidate previous conclusions.
+
+Measure:
+
+R_relevant = Correctly Revised Conclusions / Total Conclusions Requiring Revision
+
+Higher values indicate better correctability.
+
+11. Convergence
+
+Investigate whether the reasoning process reaches an acceptable state.
+
+An acceptable state requires:
+
+* Traceable justification.
+* Appropriate treatment of available evidence.
+* Identification of unresolved contradictions.
+* Explicit representation of uncertainty.
+* No unresolved critical dependency failure.
+
+Convergence should be measured over a predefined evaluation horizon.
+
+A system that stops revising is not necessarily convergent.
+
+12. Feedback Stability
+
+Investigate whether repeated feedback and revision operations improve or destabilize reasoning.
+
+Measure:
+
+* Average number of revisions per task.
+* Revision oscillation rate.
+* Recovery time.
+* Regression rate.
+* Final answer accuracy.
+* Computational cost.
+
+13. Lyapunov-Inspired Research Direction
+
+Explore whether a scalar function V(X) can represent the degree of unresolved reasoning instability.
+
+A possible conceptual objective is:
+
+V(X_(k+1)) <= V(X_k)
+
+under specified conditions.
+
+However, such a property must not be assumed.
+
+A valid Lyapunov-style analysis requires:
+
+* A mathematically defined state space.
+* A suitable candidate function.
+* Explicit assumptions.
+* Defined transition dynamics.
+* Proof or empirical evidence for the claimed property.
+
+This is a future research direction, not an established guarantee.
+
+14. Experimental Requirements
+
+Every dynamic evaluation must record:
+
+* Initial state.
+* Perturbation type.
+* Perturbation magnitude or operational definition.
+* State transitions.
+* Revision events.
+* Recovery outcome.
+* Final state.
+* Computational cost.
+
+15. Research Questions
+
+* Can reasoning stability be measured independently of answer accuracy?
+* Can unnecessary revisions be predicted?
+* Does explicit dependency tracking reduce error propagation?
+* Can revision oscillations be controlled?
+* Under what conditions does the system converge?
+* Can feedback improve recovery without increasing instability?
+* Can Lyapunov-inspired functions provide useful stability indicators?
+
+16. Status
+
+Initial dynamic evaluation framework.
+
+All metrics require implementation-specific operational definitions and empirical validation.
